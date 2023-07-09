@@ -95,3 +95,17 @@ valeurs possibles** de l'octet chiffré.
 Une fois qu'il ne reste plus qu'une valeur, 250 en l'occurence,
 il suffit de faire un XOR entre cette valeur et la valeur oubliée
 à savoir 255 : `XOR(250, 255) = 5`.
+
+On voit donc qu'on peut obtenir la totalité d'un message plus
+long par un procédé similaire. Malheureusement, cette méthode
+requiert l'utilisation de la force brute, ce qui la rend non
+faisable dans un contexte ou nous aurions le droit à trop peu
+de requête à un service par exemple.
+
+De plus, nous ne pouvons pas estimer la taille nécessaire de
+l'échantillon, car une valeur pourrait apparaître en deux
+essais, ou ne pourrait pas apparaître en 1 million.
+
+Il est important de faire attention à de telles failles à côté
+de laquelle nous pourrions facilement passer lors du
+développement d'une application.
