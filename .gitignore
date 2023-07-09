@@ -3,3 +3,8 @@ node_modules/
 
 # vscode
 .vscode
+
+# Dist
+dist/
+
+package-lock.json
