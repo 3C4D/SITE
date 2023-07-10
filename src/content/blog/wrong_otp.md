@@ -87,7 +87,7 @@ Nous pouvons alors retrouver le message clair à partir d'un
 échantillon **assez grand** de messages chiffrés.
 
 En effet, si nous connaissons la valeur oublié et que nous avons
-en notre possession un échantillon assez grand de messageschiffrés
+en notre possession un échantillon assez grand de messages chiffrés
 (même message clair mais OTP **regénéré à chaque chiffrement**
 sinon cela sera inutile), nous pouvons éliminer **toutes les
 valeurs possibles** de l'octet chiffré.
