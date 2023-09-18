@@ -19,7 +19,7 @@ arriver.
 Un exemple de prison PHP est le suivant, tiré du CTF `Ringzer0ctf` de
 2019. L'épreuve fut sobrement intitulée `PHP Jail 1` :
 
-[(Write-up de cette épreuve par **pwn4magic**](https://medium.com/@pwn4magic/ringzer0ctf-php-jail-1-1076a97ece98)
+[(Write-up de cette épreuve par **pwn4magic**)](https://medium.com/@pwn4magic/ringzer0ctf-php-jail-1-1076a97ece98)
 
 ```php
 <?php
