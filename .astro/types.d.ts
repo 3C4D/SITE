@@ -112,6 +112,20 @@ declare module 'astro:content' {
 
 	const entryMap: {
 		"blog": {
+"php_jail_bypass.md": {
+  id: "php_jail_bypass.md",
+  slug: "php_jail_bypass",
+  body: string,
+  collection: "blog",
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] },
+"write_up_poctf_2023.md": {
+  id: "write_up_poctf_2023.md",
+  slug: "write_up_poctf_2023",
+  body: string,
+  collection: "blog",
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] },
 "wrong_otp.md": {
   id: "wrong_otp.md",
   slug: "wrong_otp",
