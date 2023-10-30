@@ -2,7 +2,7 @@
 title: "Write-up DEADFACE CTF 2023"
 description: "Write-up DEADFACE CTF 2023"
 pubDate: "Oct 23 2023"
-heroImage: "/deadface.jpg"
+heroImage: "/deadface.png"
 setup : |
   import { Image } from 'astro:assets'
 ---
