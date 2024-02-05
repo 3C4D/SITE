@@ -2,7 +2,7 @@
 title: "Write-up DEADFACE CTF 2023"
 description: "Write-up DEADFACE CTF 2023"
 pubDate: "Oct 23 2023"
-heroImage: "/deadface.png"
+heroImage: "/deadface_2023/deadface.png"
 setup : |
   import { Image } from 'astro:assets'
 ---
@@ -338,7 +338,7 @@ Dans cette [page](https://ghosttown.deadface.io/t/chickens-cant-fly-but-these-on
 nous pouvons trouver une image avec 5 couleurs :
 
 <Image
-  src="/deadface_color.png"
+  src="/deadface_2023/deadface_color.png"
   alt="labyrinthe"
   width="560"
   height="80"

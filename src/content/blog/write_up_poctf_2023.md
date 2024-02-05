@@ -95,7 +95,7 @@ Non résolu
 Voici le labyrinthe résolu :
 
 <Image
-  src="/labyrinthe.png"
+  src="/poctf_2023/labyrinthe.png"
   alt="labyrinthe"
   width="600"
   height="600"
@@ -168,7 +168,7 @@ de niveau d'erreur afin de différencier la photo originale du contenu ajouté.
 Nous obtenons ce résultat assez satisfaisant :
 
 <Image
-  src="/poctf_2023_df2.png"
+  src="/poctf_2023/poctf_2023_df2.png"
   alt="df2"
   width="600"
   height="600"

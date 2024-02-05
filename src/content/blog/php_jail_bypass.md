@@ -2,7 +2,7 @@
 title: "PHP Jail - Strings/Fonctions"
 description: "Construire des chaînes de caractères / Exécuter des fonctions"
 pubDate: "Sep 18 2023"
-heroImage: "/prison_php.jpg"
+heroImage: "/php_jail_bypass/prison_php.jpg"
 ---
 
 # PHP Jail (et toutes les Jails)

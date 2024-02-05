@@ -2,7 +2,7 @@
 title: "L'oubli de valeurs dans la mise en place d'un OTP"
 description: "L'oubli de valeurs dans la mise en place d'un OTP"
 pubDate: "Jul 07 2023"
-heroImage: "/broken_face_mask.jpg"
+heroImage: "/wrong_otp/broken_face_mask.jpg"
 ---
 
 # OTP
