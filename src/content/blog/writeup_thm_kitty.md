@@ -1,7 +1,7 @@
 ---
 title: "Tryhackme - Kitty room write-up - Medium"
 description: "Tryhackme - Kitty room write-up - Medium"
-pubDate: "Oct 23 2023"
+pubDate: "Fev 05 2024"
 heroImage: "/writeup_thm_kitty/kitty.png"
 setup : |
   import { Image } from 'astro:assets'
