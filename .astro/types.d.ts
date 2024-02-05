@@ -112,6 +112,13 @@ declare module 'astro:content' {
 
 	const entryMap: {
 		"blog": {
+"deadface_2023.md": {
+  id: "deadface_2023.md",
+  slug: "deadface_2023",
+  body: string,
+  collection: "blog",
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] },
 "php_jail_bypass.md": {
   id: "php_jail_bypass.md",
   slug: "php_jail_bypass",
@@ -122,6 +129,13 @@ declare module 'astro:content' {
 "write_up_poctf_2023.md": {
   id: "write_up_poctf_2023.md",
   slug: "write_up_poctf_2023",
+  body: string,
+  collection: "blog",
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] },
+"writeup_thm_kitty.md": {
+  id: "writeup_thm_kitty.md",
+  slug: "writeup_thm_kitty",
   body: string,
   collection: "blog",
   data: InferEntrySchema<"blog">

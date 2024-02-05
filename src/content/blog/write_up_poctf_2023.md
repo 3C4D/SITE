@@ -2,7 +2,7 @@
 title: "Write-up Pointer Overflow CTF (poctf) 2023"
 description: "Write-up poctf 2023"
 pubDate: "Sep 21 2023"
-heroImage: "/uwsp.png"
+heroImage: "/poctf_2023/uwsp.png"
 setup : |
   import { Image } from 'astro:assets'
 ---
