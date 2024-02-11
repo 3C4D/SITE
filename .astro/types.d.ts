@@ -140,6 +140,13 @@ declare module 'astro:content' {
   collection: "blog",
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] },
+"writeup_ugra_ctf.md": {
+  id: "writeup_ugra_ctf.md",
+  slug: "writeup_ugra_ctf",
+  body: string,
+  collection: "blog",
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] },
 "wrong_otp.md": {
   id: "wrong_otp.md",
   slug: "wrong_otp",
