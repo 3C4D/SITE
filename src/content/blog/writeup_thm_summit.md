@@ -34,7 +34,7 @@ The analysis of the first malware (`sample1.exe`) :
   height="400"
 />
 
-The only information we have at this point to identify this malware is its hash. We can make a rule in the `Manage Hashes` tool :
+The only information we have at this point to identify this malware is its hash. We can make a detection rule in the `Manage Hashes` tool :
 <Image
   src="/writeup_thm_summit/image3.png"
   alt="hash1"
