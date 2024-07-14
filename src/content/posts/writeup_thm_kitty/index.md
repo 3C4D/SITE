@@ -2,7 +2,7 @@
 title: Tryhackme - Kitty - Medium
 published: 2024-02-05
 description: Tryhackme - Kitty - Medium
-image: ./images/kitty.png
+image: /images/writeup_thm_kitty/kitty.png
 tags: [write-up, tryhackme, sqli, blind]
 category: Write-Ups
 draft: false
@@ -61,7 +61,7 @@ Complement informations in the nmap scan don't show any valuable info.
 We can access at a first web UI available on port 80 which ask us to
 login or register :
 
-![image](./images/site1.png)
+![image](/images/writeup_thm_kitty/site1.png)
 
 After a few tries, we can see that register leads to nothing as the only
 privilege to have an account is to be able to see the page `welcome.php`,
@@ -91,7 +91,7 @@ If we enter a normal password (ex: `junk`) and a well-known SQL Injection
 payload as the username (ex: `junk' OR 1=1`), we get redirected to `index.php`
 with a message :
 
-![image](./images/detected.png)
+![image](/images/writeup_thm_kitty/detected.png)
 
 After a few tests, we can deduce that the problem come from the `OR` in the
 payload but that other SQL keywords are unfiltered (`SELECT`, `AND`, `UNION`,
@@ -301,7 +301,7 @@ port `8080` of the kitty's machine localhost.
 
 Now we can connect to the second web UI with the same VM IP on port 1337.
 
-![image](./images/site2.png)
+![image](/images/writeup_thm_kitty/site2.png)
 
 ### The root script in opt
 

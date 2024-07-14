@@ -3,7 +3,7 @@ title: PHP Jail - Strings/Fonctions
 published: 2023-09-18
 description: Construire des chaînes de caractères / Exécuter des fonctions
 tags: [php, jail, bypass]
-image : ./images/prison_php.jpg
+image : /images/php_jail_bypass/prison_php.jpg
 category: Articles
 draft: false
 ---

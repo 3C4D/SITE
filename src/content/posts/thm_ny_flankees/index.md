@@ -2,7 +2,7 @@
 title: Tryhackme - New York Flankees - Medium
 published: 2024-07-14
 description: Tryhackme - New York Flankees - Medium
-image: ./images/nyflankees.png
+image: /images/thm_ny_flankees/nyflankees.png
 tags: [write-up, tryhackme, docker, crypto]
 category: Write-Ups
 draft: false
@@ -16,7 +16,7 @@ First, here the link of the Room : [New York Flankees](https://tryhackme.com/roo
 
 # Port Scanning
 with `nmap`, we can discover if the machine has any open port :
-![image](./images/nmap_1.png)
+![image](/images/thm_ny_flankees//nmap_1.png)
 :::note
 Nmap don't scan all port with a simple scan like this. If we haven't found any interesting
 open port, we should have widened the scan, like this :
@@ -27,16 +27,16 @@ nmap -p- $IP
 
 The port 22 is SSH, not interesting for the moment. The port 8080 seems to be open, it leads
 to a web application :
-![image](./images/web_1.png)
+![image](/images/thm_ny_flankees//web_1.png)
 
 # Web App Recon
 Nothing looks to be useful in the main page, there is a login page but we don't
 have any credentials :
-![image](./images/admin_login.png)
+![image](/images/thm_ny_flankees//admin_login.png)
 
 The only page that is interesting is `/debug.html`. At the first look, it doesn't contain
 much information :
-![image](./images/debug.png)
+![image](/images/thm_ny_flankees//debug.png)
 
 But we can see in the HTML source code a `<script>` tag left it for a debug test :
 ```javascript
@@ -78,7 +78,7 @@ It is a case of padding oracle !
 # Padding Oracle
 
 Here is a schema of the CBC operating mode of AES :
-![image](./images/cbc.jpg)
+![image](/images/thm_ny_flankees//cbc.jpg)
 
 I won't explain in details how we can exploit a padding oracle but there is a wonderful
 explanation on the blog [Hackndo](https://beta.hackndo.com/padding-oracle/).
@@ -159,7 +159,7 @@ We have our credentials !
 # Blind Remote Code Execution
 Thanks to the credentials, we can log in and access to the page `/exec.html` by clicking to
 the top right corner button saying `DEBUG`.
-![image](./images/admin_page.png)
+![image](/images/thm_ny_flankees//admin_page.png)
 
 We can take the first flag and try a few commands. The only output that the page can produce when
 we input some command is `OK` or a blank page.
@@ -174,7 +174,7 @@ We can test that the backend can communicate with us :
 - Curl the server from the victim
 
 The server send the request :
-![image](./images/answer.png)
+![image](/images/thm_ny_flankees//answer.png)
 
 We will now make the victim server download a python file and execute it for us to have a
 reverse shell on the server.
@@ -206,7 +206,7 @@ After setting up our interactive shell, we are ready to investigate the server.
 
 # Container... in a container ?
 In the server, we are surprisingly root !
-![image](./images/root.png)
+![image](/images/thm_ny_flankees//root.png)
 
 But wait, we are in a docker container, not on the real server. We can see the config files
 of the web application in `/app/`.
@@ -272,8 +272,8 @@ it was easier than download a new image or build one
 :::
 
 Huray ! We are now root in a container that contains the host filesystem :
-![image](./images/host.png)
+![image](/images/thm_ny_flankees//host.png)
 
 We can see a `flag.txt` file in the root of the filesystem, it contains the
 final flag :
-![image](./images/flag.png)
+![image](/images/thm_ny_flankees//flag.png)

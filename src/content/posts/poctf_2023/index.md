@@ -4,7 +4,7 @@ published: 2023-09-21
 description: Write-up poctf 2023.
 tags: [write-up, ctf, pwn, osint, reverse]
 category: Write-Ups
-image: ./images/uwsp.png
+image: /images/poctf_2023/uwsp.png
 draft: false
 ---
 
@@ -95,7 +95,7 @@ Non résolu
 ## Here You See A Passer By
 Voici le labyrinthe résolu :
 
-![image](./images/labyrinthe.png)
+![image](/images/poctf_2023/labyrinthe.png)
 
 Le flag est : `poctf{uwsp_pr377y_bu7_p377y_bu7_pr377y}`
 
@@ -163,7 +163,7 @@ de niveau d'erreur afin de différencier la photo originale du contenu ajouté.
 
 Nous obtenons ce résultat assez satisfaisant :
 
-![image](./images/poctf_2023_df2.png)
+![image](/images/poctf_2023/poctf_2023_df2.png)
 
 Les deux parties du flag reconstituées donnent :
 `poctf{uwsp_7h3_w0rld_h4d_17_f1257}`

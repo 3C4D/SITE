@@ -3,7 +3,7 @@ title: Write-Up UGRA CTF 2024
 published: 2024-02-11
 description: Write-Up UGRA CTF 2024
 tags: [write-up, ctf, misc, web, ocr]
-image: ./images/ugra_logo.png
+image: /images/ugra_ctf_2024/ugra_logo.png
 category: Write-Ups
 draft: false
 ---
@@ -19,12 +19,12 @@ draft: false
 # Wicket Gate
 Cette épreuve nous présente un site de bibliothèque :
 
-![image](./images/wicket1.png)
+![image](/images/ugra_ctf_2024/wicket1.png)
 
 Je vous passe la traduction du russe mais nous pouvons voir un formulaire d'authentification dans la page du second onglet
 
 ## Authentification
-![image](./images/wicket2.png)
+![image](/images/ugra_ctf_2024/wicket2.png)
 
 La page présente un système d'authentification avec deux informations :
 - La carte de bibliothèque
@@ -109,10 +109,10 @@ Nous obtenons : `104АЙЙ27` pour l'utilisateur de numéro `8610014990`.
 ## Page de catalogue
 
 Après l'authentification, nous pouvons aller sur le 3eme onglet jusqu'alors verrouillé, un catalogue.
-![image](./images/wicket3.png)
+![image](/images/ugra_ctf_2024/wicket3.png)
 
 Seul le dernier lien est intéressant, il possède des champs à renseigner pour vérification :
-![image](./images/wicket4.png)
+![image](/images/ugra_ctf_2024/wicket4.png)
 
 La page possède un code javascript :
 ```js
@@ -177,17 +177,17 @@ Le flag est : `ugra_wicket_gate_is_not_wicked_uqpg40dtv4jv`
 
 ## Paper please
 Nous pouvons voir une image :
-![image](./images/messenger1.png)
+![image](/images/ugra_ctf_2024/messenger1.png)
 
 C'est une référence claire au jeu paper please, l'élément de déchiffrement :
-![image](./images/messenger2.png)
+![image](/images/ugra_ctf_2024/messenger2.png)
 
 ## Déchiffrement
 En passant l'élément de déchiffrement sur l'image, nous pouvons voir deux chaînes distinctes :
-![image](./images/messenger3.png)
+![image](/images/ugra_ctf_2024/messenger3.png)
 
 Donne : `ugra*snowier*pa`
-![image](./images/messenger4.png)
+![image](/images/ugra_ctf_2024/messenger4.png)
 
 Donne : `stures*8m0fksqx`
 
@@ -205,7 +205,7 @@ je vais exposer une méthode plutôt attendue, donc elle fonctionne pour les deu
 
 ## Première aproche
 Nous débarquons sur un site qui nous propose de cliquer 2000+ fois sur un bouton pour obtenir le flag, problème, après quelques clics, un captcha apparait, et pas des plus faciles :
-![image](./images/easy1.png)
+![image](/images/ugra_ctf_2024/easy1.png)
 
 ## Stratégie
 La stratégie pour automatiser le processus de résolution de captcha est la suivante :
@@ -317,7 +317,7 @@ print("[+] FLAG :", flag)
 Un fichier `eml` (abréviation d'email) est un fichier contenant un mails et ses diverses données/metadonnées.
 
 Ce fichier semble ici contenir des images et du texte. Le texte semble soit chiffré, soit encodé :
-![image](./images/inbox1.png)
+![image](/images/ugra_ctf_2024/inbox1.png)
 
 ## Encodage
 Après de ***longues*** recherches, nous trouvons que le mauvais encodage du texte est quelque chose qui arrive souvent aux russes avec l'encodage `Windows-1251`, un encodage sur 8-bit, posant problème avec le cyrillique.
@@ -442,7 +442,7 @@ local.get $var2
 i32.load8_u
 i32.xor
 ```
-![image](./images/onetwograb1.png)
+![image](/images/ugra_ctf_2024/onetwograb1.png)
 
 ## Flag
 En récupérant les caractères ASCII après chaque instruction XOR, nous obtenons (après décodage) :
@@ -456,14 +456,14 @@ ugra_those_are_basically_all_the_possibilities_of_wasm_r70fwqvdi
 L'épreuve est traîte d'OSINT et de reconnaissance.
 
 On nous demande de chercher ce que IF (en deux mots) peut vouloir dire sur l'écran d'un ascenseur allemand :
-![image](./images/if1.png)
+![image](/images/ugra_ctf_2024/if1.png)
 
 Nous trouvons que cela peut vouloir dire : `Inspektionsfahrt` en faisant une recherche en Allemand.
 
 Les deux mots sont donc `Inskpektion` et `Fahrt`.
 
 Nous sommes redirigés sur le endpoint `/verify_result` ou une magnifique photo d'Angela Merkel se tient à côté de ce qui semble être le flag distordu :
-![image](./images/if2.png)
+![image](/images/ugra_ctf_2024/if2.png)
 
 # Flag
 Le flag est :

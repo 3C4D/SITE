@@ -3,7 +3,7 @@ title: Write-up DEADFACE CTF 2023
 published: 2023-10-23
 description: Write-up DEADFACE CTF 2023
 tags: [write-up, ctf, reverse, stegano, forensic]
-image: ./images/deadface.png
+image: /images/deadface_2023/deadface.png
 category: Write-Ups
 draft: false
 ---
@@ -338,7 +338,7 @@ flag : `flag{Aurora Pharma}`
 Dans cette [page](https://ghosttown.deadface.io/t/chickens-cant-fly-but-these-ones-do-a-lot/128) du chat,
 nous pouvons trouver une image avec 5 couleurs :
 
-![image](./images/deadface_color.png)
+![image](/images/deadface_2023/deadface_color.png)
 
 Si on concatène les codes hexa des couleurs (RGB), nous obtenons la suite
 hexadécimale suivante :
