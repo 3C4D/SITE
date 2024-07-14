@@ -10,7 +10,7 @@ draft: false
 
 # Introduction
 In this Tryhackme room, we will use cryptography and system skills to
-takeover the host of a containered web application.
+take over the host of a container holding a web application.
 
 First, here the link of the Room : [New York Flankees](https://tryhackme.com/room/thenewyorkflankees)
 
@@ -18,7 +18,7 @@ First, here the link of the Room : [New York Flankees](https://tryhackme.com/roo
 with `nmap`, we can discover if the machine has any open port :
 ![image](/images/thm_ny_flankees//nmap_1.png)
 :::note
-Nmap don't scan all port with a simple scan like this. If we haven't found any interesting
+Nmap don't scan all ports with a simple scan like this. If we haven't found any interesting
 open port, we should have widened the scan, like this :
 ```bash
 nmap -p- $IP
@@ -60,38 +60,38 @@ function stefanTest1002() {
 
 As we can deduce from the comments in the script :
 - The encryption used is AES with CBC operating mode using PKCS padding
-- The call the the url in the script is linked to authentication
+- The call the url in the script is linked to authentication
 
 If we try an HTTP GET request on the url `http://10.10.92.186:8080/api/debug/39353661353...`, it tells us:
 ```
 Custom authentication success
 ```
-However, if we modify or remove one of the letter of the hex string after `/debug/`, we get this :
+However, if we modify or remove one of the letters of the hex string after `/debug/`, we get this :
 ```
 Decryption error
 ```
-- The payload after `/debug/` is an hex string representing an AES encrypted payload
+- The payload after `/debug/` is a hex string representing an AES encrypted payload
 - The backend is trying to decipher an AES/CBC payload but tells us when it fails
 
 It is a case of padding oracle !
 
 # Padding Oracle
 
-Here is a schema of the CBC operating mode of AES :
+Here is a picture of the CBC operating mode of AES :
 ![image](/images/thm_ny_flankees//cbc.jpg)
 
-I won't explain in details how we can exploit a padding oracle but there is a wonderful
+I won't explain in details how we can exploit a padding oracle, but there is a wonderful
 explanation on the blog [Hackndo](https://beta.hackndo.com/padding-oracle/).
 
 To make it simple, a padding oracle attack scenario is on when the backend tells us when a
 given ciphertext is good (in fact, well padded). Using this fact, we are then able to get
-one byte after the other of each bloc of the given ciphertext. There is 256 for each bytes,
-so the attack is way more fast that try to bruteforce the AES key.
+one byte after the other of each block of the given ciphertext. There is 256 for each byte,
+so the attack is way faster that try to bruteforce the AES key.
 
 :::note
-You may have notice one thing if you read the [Hackndo](https://beta.hackndo.com/padding-oracle/) article,
+You may have noticed one thing if you read the [Hackndo](https://beta.hackndo.com/padding-oracle/) article,
 we don't know the Initialization Vector (IV). We may don't recover the first bloc because of that but we
-will pray for the IV to be serie of 16 zeros for now.
+will pray for the IV to be a series of 16 zeros for now.
 :::
 
 Let's make a script to decipher the ciphertext given in the javascript.
@@ -166,14 +166,14 @@ we input some command is `OK` or a blank page.
 
 We have to go blind !
 
-After a few tries, I didn't managed to open myself a reverse shell with a single command,
+After a few tries, I didn't manage to open myself a reverse shell with a single command,
 I don't know why. But I have a strategy.
 
 We can test that the backend can communicate with us :
 - Opening an http server on the attacking machine
 - Curl the server from the victim
 
-The server send the request :
+The server sends the request :
 ![image](/images/thm_ny_flankees//answer.png)
 
 We will now make the victim server download a python file and execute it for us to have a
@@ -243,7 +243,7 @@ The container doesn't seem to be privileged, so we can search different properti
 The article of [HackTricks](https://book.hacktricks.xyz/linux-hardening/privilege-escalation/docker-security/docker-breakout-privilege-escalation)
 is a really good base to understand docker escape.
 
-Enumeration after enumeration, I discovered an interesting properties :
+Enumeration after enumeration, I discovered an interesting property :
 - The docker socket is mounted on the filesystem : `/run/docker.sock`
 - The docker binary is on the system
 - There are images available if we check with the command `docker ps` :
