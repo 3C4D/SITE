@@ -13,6 +13,7 @@ draft: false
 
 ## Summary
 - [A bit of Context](#a-bit-of-context)
+- [Insecure File Upload Functionalities](#insecure-file-upload-functionalities)
 - [Filter Bypass Using Wildcard](#filter-bypass-using-wildcard)
 - [HTTP Verb Tampering](#http-verb-tampering)
 - [Information Disclosure Using 4D Builtins URL](#information-disclosure-using-4d-builtins-url)
